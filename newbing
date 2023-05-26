@@ -1,0 +1,204 @@
+
+
+
+
+
+
+PAPER . OPEN ACCESS
+A Study on Intelligent Obscured Face Image
+Completion System Based on GAN Network To cite this article: Haoxuan Zhu et al2021 J. Phys.: Conf. Ser. 2033 012002
+
+View the article online for updates and enhancements.
+
+
+You may also like
+- A Virtual Machine for Low-Level Video Processing in Actor Prolog
+A A Morozov and O S Sushkova
+- Development of Spreadsheet-Based          Integrated Transaction Processing              Systems and Financial Reporting Systems
+I M Ariana and I M Bagiada
+- The Main Ways to Control the Efficiency of Vibration Abrasive Processing
+Anatoly Prokopets, Vitaly Shenstein, Tatiana Prokopets et al.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+This content was downloaded from IP address 84.17.45.179 on 17/05/2023 at 14:23
+
+Journal of Physics: Conference Series                     2033 (2021) 012002     doi:10. 1088/1742-6596/2033/1/012002
+
+
+
+
+
+
+
+
+A Study on Intelligent Obscured Face Image Completion System Based on GAN Network
+
+Haoxuan Zhu1, *, Kai Zhao1, Ming Yang1, Yanxing Zhu1, Zeyuan Wang2
+1Beihang University School of Instrumentation and Optoelectronic Engineering Beijing Haidian 100191
+2Beihang University School of Aeronautic Science and Engineering Beijing Haidian
+100191
+*Corresponding author e-mail: zhuhaoxuan@buaa.edu.cn
+Abstract. Image recognition and processing is an important part of modern information technology. However, in real life, the face will inevitably be blocked by hats, masks, or  face  photos  are  damaged,  scratches,  and  images  are  added  mosaic  and  other reasons, resulting in face image masking, increasing face information recognition and processing  difficulties.  Image  completion  is  a  kind  of technology  to  restore  the missing information of obscured image. By supplementing the information of missing area, it can reduce the difficulty of image recognition and simplify the processing of face information.So it has important research significance for the restoration of shaded image. The traditional image completion technology produces the face of poor natural degree. At present, most of the popular completion methods combine depth learning, and the repair methods based on generating anti-network GAN are the representatives of them.But the stability of the network is poor, so it is difficult to train pictures with large  sheltered  area  or poor image  quality.Some  methods  are not  effective  in the completion   of  arbitrary   shaded   areas.   Therefore,   this   study   focuses   on   the improvement of the stability of the generated adversarial network and the maintenance of the global and local semantic consistency between the completion image and the real image. The main work includes: (1) Sets a special network structure of global discriminator  and  local  discriminator.  When  the  input  is  arbitrarily  shaded,  the completion image can maintain the consistency of global and local semantics. (2) The least square loss function is used to improve the stability of the GAN network. So it performs great when the input image has large area masking or low visualization degree. (3) ADAM algorithm is used to accelerate the training of neural network. (4) Based on the completion model, a human-computer interaction software is designed and developed, which includes data set selection, image selection, image completion, result evaluation and so on. The system is applied to the removal of facial structures such as wrinkles and spots. Compared with some existing software, the system can effectively remove the selected facial structures without image distortion. Based on the design of special network structure, the system improves the supervision ability of global and local completion , the stability of GAN network and enhances its training ability in large area masking. The system is intelligent and has strong completion
+ Content from this work may be used under the terms of the Creative Commons Attribution 3.0 licence. Any further distribution
+Published under licence by IOP Publishing Ltd                                          1
+
+Journal of Physics: Conference Series                     2033 (2021) 012002     doi:10. 1088/1742-6596/2033/1/012002
+
+
+ability for arbitrary masking and large area masking. The research results of this paper effectively  restore  the  information  loss  caused  by  image  masking  and  prepare favorable conditions for subsequent image recognition and processing.
+
+Keywords: machine vision, obscured face image completion system, GAN network, network stability, Adam optimization algorithm, structure removal
+1.  Introduction
+1.1.  Background and significance of the project
+Face image recognition and extraction are widely used.However,face images will be obscured for various reasons, resulting in lack of information. Sunglasses, hats and so on will mask the face,  scratches,  creases, breakage  on the  face picture, the picture may also be  artificially added  mosaic,  these  reasons  will  mask  the  image,  increasing  the  difficulty  of  image recognition and the complexity of image processing.
+Image  completion is widely used.In the  field  of criminal  investigation,  suspects   wear sunglasses,  hats  to  avoid  surveillance  cameras.But  image  completion  can  restore  lost information to help solve cases[1],[2].In the field of historical photo restoration, some of the photos of important historical value have a wide range of information missing because of their old  age.  Image  restoration  can  restore the  appearance  of these photos  and provide  more historical information for researchers.Image masking is everywhere, and image completion, has important practical application requirements.
+In order to fully combine the face image completion technology with the actual demand, this paper carries out the research of intelligent completion system to realize the effect of completing the obscured image in the practical application field. It has important academic research and practical application significance.
+1.2.  Current research status
+Conventional image repair methods have many types.Patch-Match methods are matched by similar  blocks[3].However,  the  assumption  that  similar  blocks  exist  in  known  regions  is difficult to guarantee in practical application scenarios. The establishment of search database often requires huge database support, and the matching speed of query is slow, which limits the application of this method. Based on the diffusion fusion method, the obscured area is completed by adding detailed information around the repair area to penetrate into the repair area[4],[5].
+Compared with traditional methods,  face  image  completion technology based  on  depth learning has stronger image generation ability[6].A context-based pixel
+prediction algorithm with more natural effect in global structure[7] is proposed by Pathak et al.GAN network was first proposed by Goodfellow et al in 2014, which greatly improved the completion capability of the completion network[8].The content-aware layer is added by Jiahui Yu to the generation network to solve the problem that the large probability of features learned from distant regions is invalid[9].
+Cao Qingwen used MATALB to develop image restoration system in the field of image restoration system design[10].An image repair system based on Spark Framework proposed by Ping Wei[11].Lu Liang designed and realized the repair
+system of old movies, and achieved ideal results.
+Shortcomings in existing repair systems:
+
+Journal of Physics: Conference Series                     2033 (2021) 012002     doi:10. 1088/1742-6596/2033/1/012002
+
+
+Compared with  the  real  image,  the  obscured  image has  different  global  semantics  or mismatch of local details. Poor performance in arbitrary shaded areas.GAN is unstable, so the training effect is not ideal when the image masking area is too large.
+1.3.  Work of the paper
+1. network structure optimization: design the global and local identification network structure, reduce the influence of the shape of the sheltered area on the completion effect, and the effect on any area is ideal.
+2.  network  stability  optimization:  select  the  least  square  loss  function  to  improve  the stability of the GAN and complete the completion of large area shaded images.
+3. convergence speed improved: Adam algorithm is used to reduce the parameter quantity and algorithm complexity.
+4. system design: based on the obscured face completion model, the face masking image is systematically studied  and designed,  and  a human-computer interaction image  completion software is developed.
+2.  Convolutional Neural Networks and Generative Adversarial Networks
+2.1. Artificial and convolutional neural networks
+Deep  learning  network  structure  is  widely  used  in  image  completion.  By  imitating  the working  principle  of human  brain  neurons,  the  information  is  extracted,  processed  and processed.
+Face images have more feature information. Each layer of convolutional neural network contains multiple convolution kernels and each convolution kernel has the ability to extract a certain feature of the image, such as the extraction of single features such as eye shape, layout, hue, etc.
+2.2.  Generation of adversarial networks
+The core of GAN are generator and discriminator. The function of generator is to complete the   input   incomplete  picture,   and   deliver   the   result   to   the   discriminator   for   effect evaluation,and the discriminator gives the appraisal result.The network parameters are updated according to the result.
+3.  The algorithm design of obscured face image completion
+3.1.  Completion network and discrimination network
+The size and shape of the obscured area are random.Therefore, on the one hand, the network needs to supervise and feedback the overall layout of the image to ensure the consistency of the global semantics; on the other hand, the network needs to monitor the local details of the image well to ensure the consistency of the local semantics.This system adopts the design of two discriminators, and sets up two discriminators which can supervise the global and local structure. It is helpful to deal with the arbitrariness of shelter.
+The network structure is shown in fig 1. The height and width of each cuboid represents the pixel area of the input image. If the input is 256×256 pixel area, the height and width of the first cuboid are all 256 pixel. In this network structure, the height and width of each cuboid are consistent. The depth represents image channel number. The length, width and height of the cuboid constantly change, and the corresponding image features are constantly aggregated and adjusted in this process.
+
+Journal of Physics: Conference Series                     2033 (2021) 012002     doi:10. 1088/1742-6596/2033/1/012002
+
+
+
+1Fig. 1 Completion and discrimination network structure
+The completion method in this study has the ability to generate new semantics and can generate image blocks that do not appear in other regions of the image. Also, the network can naturally complete the image with familiar and highly specific structures (such as faces) .
+3.2.  GAN Network optimization design
+The essence of GAN is to learn an optimal mapping G: Z → X , Z is the generated data and X is  the  real  data.But  the  degree  of  G(z)  approximation X is  limited,  that  is,  can  not  be completely consistent[12]. Tan Hongwei thinks that the instability of gradient update causes network instability[13].Therefore, it is very important to select reasonable loss function and feedback the training results so that the network parameters can be updated continuously.
+Masking in large areas contains a large amount of important information.For example, completely masking eyes, without any relevant features to be extracted by the network.When such masking is put in training, the cross-entropy loss function can not continue to update the parameters,  so  the  network  can  not  continue  training.But  least  square  loss  function  can overcome this point, as formula (1)(2).
+
+
+min G  Net =  Ex~Pdata  [(D(x) − b)2 ] +  Ez~Pz [(D(G(z)) − a)2 ]
+minD Net = Ez~Pz [(D(G(z)) − c)2 ]
+
+
+( 1)
+
+(2)
+
+a,b,c is a constant in the upper formula, take a =0, b=c=1.
+Adam  design independent  learning rate  for different parameters,  effectively reduce the parameters  of network training,  and use Adam  algorithm to improve the rate  of network
+convergence.
+3.3.  Model Training and Testing
+This  system  selects  nine  different  data  sets  from  StyleGAN and  KAGGLE  for  training.It basically covers  all kinds  of possible  face  images that may appear in real  life, including oriental and western face data set, male and female face data set, child,adult and elderly face data set, face with glasses and smiling face data set. The emphasis of training different types of data sets will be different, for example, the face data set containing glasses pays more attention to the structure and style of glasses.
+The training lasted 1500 rounds, and 32 pictures of the training set were randomly divided into  one  group.  The  image  pixel  value  (0-255)  is  transformed  into  [- 1,1]  interval  by mapping f : a → a / 127.5 − 1 before  formal  training,  which  is  convenient  for  subsequent
+
+Journal of Physics: Conference Series                     2033 (2021) 012002     doi:10. 1088/1742-6596/2033/1/012002
+
+
+operation. The 256×256 pixel area images are randomly selected as input, and the rectangular shading of side length in [32,50] pixels is randomly generated within 128 pixels of the image center.
+Pre-training of completion network continues 200 rounds. After it, completion network can basically  complete  part  of the  shaded  image,  but  the  effect  needs  to  be  improved.The discrimination network is pre-trained to improve the ability to judge the truth and falsehood of the image. For the real image, its score is close to 1, for the generation of forged images, its score  is  close  to  0.The  error  of the  authentication  network  is  in  the  form  of backward feedback, and the loss is reduced continuously through training, which shows that the ability of the discrimination network to accurately score real images and forged images is constantly enhanced. The process lasted 600 rounds.
+In the third stage, completion network and discrimination network participate together,.The update   of   the   network   is   transformed   into   the   maximum-minimum   optimization algorithm.The  completion  network  inputs  obscured  image  and  its  mask,  passes  through completion  network,  finally  outputs  the  completion  result.Original  image  and  completed image  are passed into the global  discrimination network  and the  obscured  and peripheral regions of them are passed into the local discrimination network. The discrimination network judges the similarity between the two and outputs the completion effect score through a full connection layer,as fig 2.
+
+Fig. 2 Joint training of completion and discrimination networks
+3.4.  Results analysis and discussion
+Comparing completion effect with others, the system can complete random obscured face images, with natural effect .Also, the completion image is basically close to the real image, and the evaluation index score is high,as fig 3.
+
+Journal of Physics: Conference Series                     2033 (2021) 012002     doi:10. 1088/1742-6596/2033/1/012002
+
+
+
+Fig. 3 Completion of arbitrary occlusion (input, completion and real images from left to right)
+Use square shelter, and increase the area of shelter .When obscured area  accounts for 33% of the effective information area,the PSNR value is greater than 30 dB, and SSIM value is greater than 0.92,as fig4.
+
+Fig. 4 Completion results under different obscured areas
+4.  Design of obscured face completion system
+In  order  to  combine  with  practical  application,A  software  which  can  complete  image completion and support human-computer interaction is developed. There are two ways to add shading,  generating  rectangular  shading  randomly  or  masking  any  part  by  dragging  the mouse.The performance test indexes include peak signal-to-noise ratio (PSNR) and structural similarity (SSIM).
+
+Journal of Physics: Conference Series                     2033 (2021) 012002     doi:10. 1088/1742-6596/2033/1/012002
+
+
+
+Fig. 5 Partition of Face Repair System Module
+Firstly, select the data set model, then select the picture to be processed and   masking method; the upper right box shows the image selected by operators, and the result is displayed below. The PSNR and SSIM are also displayed,as fig 6.
+5.  Systematic experimental study —— removal of partial facial structure
+The system is used to remove facial wrinkles. People pay more and more attention to the beautification of photos, all kinds of beautification software came into being.Skin filter and other face image beautification methods have been widely used. An important aspect of face image beautification is the removal of discordant structure of face (such as wrinkles, spots, etc).The face image completion method has the ability to repair the damaged and shaded image. The system successfully removes
+
+Fig. 6 Software interface (left-to-right below:obscured,completion and real images)
+the wrinkles on the original image and makes the face more smooth.Repair software can remove wrinkles on the forehead to a certain extent, but the removal effect is not ideal. Filters, skin grinding and other ways damages the nature and harmony of the image. Face structure removal by masking reconstruction will not damage the quality of the image itself.
+
+Journal of Physics: Conference Series                     2033 (2021) 012002     doi:10. 1088/1742-6596/2033/1/012002
+
+
+
+Fig. 7 Comparison of some software and ours to remove the forehead wrinkles
+6.  Conclusion
+Obscured face image completion can reduce the difficulty of image recognition and simplify the  complexity of subsequent  image processing.  It has been widely used  in many fields. Existing  image  methods  have  two  problems,  the  overall  layout  and  local  details  of the completion are often not ideal, influencing completion of arbitrary obscured area; GAN is often difficult to train when large obscured area is put in. The actual images usually have a large and arbitrary area of shadowing.
+In  order  to  facilitate  the  application  of various  image  completion  scenes  in  real  life, intelligent  completion  system  is  studied  and  designed.  The  system has  strong  completion ability for arbitrary masking and large area masking. Through the training of various data sets, the targeted repair of input images can be realized. In order to enhance the ability of the network to completion arbitrary shaded areas, the global discriminator and local discriminator are designed based on the GAN to improve the semantic consistency of the global and local images. To achieve large-area obscured area completion and improve GAN stability, the least squares loss is used as a loss function. It is concluded that the algorithm can complete face images of any shaded area and can still complete the task when the obscured area is quite large.  In  order  to  combine  with  practical  application,  a  software  that  supports  human- computer interaction is developed, with the functions of data set selection, image selection, image completion, performance test and so on. Apply system to the removal of face partial structures (such as wrinkles, spots).Compared with other methods, it is found that the system can effectively remove the selected face structure without image distortion.
+The existing image completion system is limited by the shape and area of the obscured area.The  completion  system proposed  in this paper  simulates many problems  in practical application, broadens the application scope of the existing system, and has great application potential!
+References
+[1]      Feng  Jie.  A  Study  on  the  Method  of  Face  Blocking  Image  Repair  Based  on  the Generation Network [D].Nanning normal University ,2019.
+[2]      Zhu  Dequan.  A  Study  on  Face  Image  Repair  Based  on  Generating  Confrontation Network[D]. University of Electronic Science and Technology ,2020.
+[3]      Barns  C,Shechtman  E,Finkelstein  A,et  al.PatchMatch:A  randomized  correspondence algorithm    for    structural    image    editing[J].ACM    Transactions    on    Graphics (ToG),2009,28(3):24
+[4]     Marcelo          Bertalmio,Guillermo          Sapiro,Vincent          Caselles,and          Coloma Ballester.2000.Image Inpainting.In ACM transactions on Graphics (Proceedings of SIGGRAPH). 417-424
+[5]     Anat Levin,Assaf Zomet,and Yair  Weiss.2003.Learning How to Inpaint  from Global
+
+Journal of Physics: Conference Series                     2033 (2021) 012002     doi:10. 1088/1742-6596/2033/1/012002
+
+
+Image Statistics.In International Conference on Computer Vision.305-312.
+[6]      Fan  Chunqi,  Ren  Kun,  Meng  Lisa,  Huang  Long.  Recent  advances  in  Digital  Image repair algorithm based on depth Learning[J].The following advances in digital image repair algorithms Signal processing 36(01):102- 109.
+[7]      Pathak   D,Krahenbuhl    P,Donahue   J,et   al.Context   Encoders:Feature   Learning   by Inpainting [C]//Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition.2016:2536-2544.
+[8]      Goodfellow     I,Pouget-Abadie     J,Mirza     M,et     al.Generative     Adversarial     Nets [C]//Advances in Neural Information Processing Systems.2014:2672-2680.
+[9]     J.Yu, Z.Lin, J.Yang, X.Shen, X.Lu and T.S.Huang, "Generative Image Inpainting with Contextual  Attention,  "IEEE/CVF  Conference  on  Computer  Vision  and  Pattern Recognition,2018        Salt        Lake        City,        UT,        2018,        pp.5505-5514, doi:10. 1109/CVPR.2018.00577.
+[10]    Cao  Qingwen.Image  Repair  Method  Based  on  Apriori  Information  Learning  and Priority Optimization [D]. Northwestern University ,2019.
+[11]    Pingwei.Design  and  Implementation  of Image  Data  Complement  System  Based  on Cloud Computing [D].Beijing University of posts and Telecommunications ,2019.
+[12]   Arjovsky M,Bottou L.Towards principled methods for training generative adversarial networks[C].In    Proceedings     of    the    International    Conference    on    Learning Representations,2017.
+[13]   Tan  Hongwei.  A  Study  on  Unsupervised  Image  Generation  Based  on  Generative Confrontation Network [D]. Southwest University ,2020.
